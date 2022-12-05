@@ -1,51 +1,46 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: PKKostov18
-  Date: 11/30/2022
-  Time: 2:38 PM
-  To change this template use File | Settings | File Templates.
---%>
+<jsp:useBean id="athlete" scope="request" type="com.example.springmvcconfiguration.model.Athlete"/>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
-    <title>Add player</title>
+    <title>Player Confirmation</title>
 </head>
 <body>
 
-<h2>Player Form</h2>
+<h2>Player Confirmation</h2>
 <hr>
 
-<form:form action="processPlayerForm" modelAttribute="athlete">
-    <br><br>
-    Name:<form:input path="lastName"/>
+<br><br>
+The player has been added.
 
-    Country: <form:select path="country">
+<br><br>
 
-    <form:option value="AUT" label="Austria"/>
-    <form:option value="FRA" label="France"/>
-    <form:option value="SRB" label="Serbia"/>
-    <form:option value="SUI" label="Switzerland"/>
-    <form:option value="USA" label="United States of America"/>
-</form:select>
+<b>Name</b> : ${athlete.firstName}
+${athlete.lastName}
 
-    Handedness:
-    Left-Handed <form:radiobutton path="handedness" value="Left-Handed"/>
-    Right-Handed <form:radiobutton path="handedness" value="Right-Handed"/>
-    Ambidextrous <form:radiobutton path="handedness" value="Ambidextrous"/>
+<br><br>
+Country: ${athlete.country}
 
+<br><br>
+Handedness: ${athlete.handedness}
 
-    Grand Slams Titles Won:
-    Australian Open <form:checkbox path="grandSlams" value="Australian Open"/>
-    French Open <form:checkbox path="grandSlams" value="French Open"/>
-    Wimbledon <form:checkbox path="grandSlams" value="Wimbledon"/>
-    US Open <form:checkbox path="grandSlams" value="US Open"/>
+<br><br>
 
-    <br><br>
-    <input type="submit" value="Add Player"/>
+Grand Slam Titles:
+<ul>
+    <c:forEach items="${athlete.grandSlams}" var="title">
+        <li>${title}</li>
+    </c:forEach>
+</ul>
 
-</form:form>
+<b>Current Rank</b> : ${athlete.rank}
+
+<b>Last Won</b> : <ftm:formatDate value="${athlete.lastWon}" type="date" pattern="dd-MM-YYYY"/>
+
+<b>Prize Money</b> : ${athlete.prizeMoney}
 
 </body>
 </html>
